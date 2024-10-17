@@ -2,6 +2,9 @@
 
 use dioxus::prelude::*;
 use dioxus_logger::tracing;
+use theme::Theme;
+
+mod theme;
 
 fn main() {
     // Init logger
@@ -11,31 +14,24 @@ fn main() {
 }
 
 fn App() -> Element {
-    // Build cool things ✌️
+    let default_theme = use_signal(move || {
+        Theme {
+            primary_color: "#8aadf4",    // Blue (Primary)
+            secondary_color: "#f5bde6",  // Pink (Secondary)
+            background_color: "#24273a", // Dark Background
+            text_color: "#cad3f5",       // Light Text Color
+            accent_color: "#f28fad",     // Red Accent
+            border_color: "#494d64",     // Dark Gray Border
+        }
+    });
+
+    use_context_provider(move || default_theme);
 
     rsx! {
-        link { rel: "stylesheet", href: "main.css" }
-        img { src: "header.svg", id: "header" }
-        div { id: "links",
-            a { href: "https://dioxuslabs.com/learn/0.5/", "📚 Learn Dioxus" }
-            a { href: "https://dioxuslabs.com/awesome", "🚀 Awesome Dioxus" }
-            a { href: "https://github.com/dioxus-community/", "📡 Community Libraries" }
-            a { href: "https://github.com/DioxusLabs/dioxus-std", "⚙️ Dioxus Standard Library" }
-            a { href: "https://marketplace.visualstudio.com/items?itemName=DioxusLabs.dioxus",
-                "💫 VSCode Extension"
-            }
-            a { href: "https://discord.gg/XgGxMSkvUM", "👋 Community Discord" }
+        div {
+            class: "w-screen h-screen",
+            style: "background-color:{default_theme().background_color};color:{default_theme().text_color}",
+            "The text color is grey"
         }
     }
-}
-
-#[server(PostServerData)]
-async fn post_server_data(data: String) -> Result<(), ServerFnError> {
-    tracing::info!("Server received: {}", data);
-    Ok(())
-}
-
-#[server(GetServerData)]
-async fn get_server_data() -> Result<String, ServerFnError> {
-    Ok("Hello from the server!".to_string())
 }

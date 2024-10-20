@@ -1,9 +1,11 @@
 #![allow(non_snake_case)]
 
+use components::sidebar::Sidebar;
 use dioxus::prelude::*;
 use dioxus_logger::tracing;
 use theme::Theme;
 
+mod components;
 mod theme;
 
 fn main() {
@@ -31,7 +33,7 @@ fn App() -> Element {
         div {
             class: "w-screen h-screen",
             style: "background-color:{default_theme().background_color};color:{default_theme().text_color}",
-            "The text color is grey"
+            Sidebar {}
         }
     }
 }

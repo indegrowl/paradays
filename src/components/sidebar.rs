@@ -8,9 +8,10 @@ pub fn Sidebar() -> Element {
 
     rsx! {
         nav {
-            class:"fixed top-0 left-0 p-2 visible lg:invisible border-b w-full",
-            style: "border-color: {theme_context().border_color};",
+            class:"fixed top-0 left-0 p-2 border-b w-full h-10 flex justify-between align-center",
+            style: "border-color: {theme_context().border_color}; background-color: {theme_context().background_color}",
             svg {
+                class: "visible lg:invisible",
                 "stroke-width": "2",
                 "stroke": "{theme_context().text_color}",
                 width: "24",

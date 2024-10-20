@@ -1,6 +1,8 @@
 #![allow(non_snake_case)]
 
+use components::editor::Editor;
 use components::sidebar::Sidebar;
+
 use dioxus::prelude::*;
 use dioxus_logger::tracing;
 use theme::Theme;
@@ -31,9 +33,10 @@ fn App() -> Element {
 
     rsx! {
         div {
-            class: "w-screen h-screen",
+            class: "w-screen h-screen flex p-0 m-0",
             style: "background-color:{default_theme().background_color};color:{default_theme().text_color}",
             Sidebar {}
+            Editor {}
         }
     }
 }
